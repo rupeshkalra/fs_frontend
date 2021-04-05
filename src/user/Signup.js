@@ -1,8 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { signup } from '../auth/helper';
 import Base from '../core/Base';
 
 
 const Signup=()=>{
+    
+    const [values,setValues]=useState({
+      name:"",
+      email:"",
+      password:"",
+      error:"",
+      success:false
+    });
+
+    const {name,email,password,error,success} = values
+
+    const handleChange =(name)=>(event)=>{
+      setValues({
+        ...values,[name]:event.target.value,error:false
+      })
+    }
+
+    const onSubmit =(event)=>{
+        event.preventDefault()
+        setValues({...values,error:false})
+        signup({name,email,password})
+        .then(data=>{
+          if(data.erro){
+            setValues({...values,error:data.error,success:false})
+          }
+          else{
+            setValues({...values,error:"",success:true,
+          name:"",
+          email:"",
+          password:""
+          });
+          }
+        })
+        .catch(console.log("error in signup"));
+    }
+
     const signUpForm = () => {
         return (
           <div className="row">
@@ -10,19 +47,19 @@ const Signup=()=>{
               <form>
                 <div className="form-group">
                   <label className="text-light">Name</label>
-                  <input className="form-control" type="text" />
+                  <input onChange={handleChange("name")} className="form-control" type="text" />
                 </div>
                 <div className="form-group">
                   <label className="text-light">Email</label>
-                  <input className="form-control" type="email" />
+                  <input onChange={handleChange("email")} className="form-control" type="email" />
                 </div>
     
                 <div className="form-group">
                   <label className="text-light">Password</label>
-                  <input className="form-control" type="password" />
+                  <input onChange={handleChange("password")} className="form-control" type="password" />
                 </div>
                 <br/>
-                <button className="btn btn-success btn-block">Submit</button>
+                <button onClick={onSubmit} className="btn btn-success btn-block">Submit</button>
               </form>
             </div>
           </div>

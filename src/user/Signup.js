@@ -20,13 +20,40 @@ const Signup=()=>{
         ...values,[name]:event.target.value,error:false
       })
     }
-
+    const successMessage = () => {
+      return (
+        <div className="row">
+          <div className="col-md-6 offset-sm-3 text-left">
+            <div
+              className="alert alert-success"
+              style={{ display: success ? "" : "none" }}
+            >
+              New account was created successfully.
+            </div>
+          </div>
+        </div>
+      );
+    };
+    const errorMessage = () => {
+      return (
+        <div className="row">
+          <div className="col-md-6 offset-sm-3 text-left">
+            <div
+              className="alert alert-danger"
+              style={{ display: error ? "" : "none" }}
+            >
+              {error}
+            </div>
+          </div>
+        </div>
+      );
+    };
     const onSubmit =(event)=>{
         event.preventDefault()
         setValues({...values,error:false})
         signup({name,email,password})
         .then(data=>{
-          if(data.erro){
+          if(data.error){
             setValues({...values,error:data.error,success:false})
           }
           else{
@@ -37,7 +64,7 @@ const Signup=()=>{
           });
           }
         })
-        .catch(console.log("error in signup"));
+        .catch(()=>console.log("error in signup"));
     }
 
     const signUpForm = () => {
@@ -68,6 +95,8 @@ const Signup=()=>{
 
     return (
         <Base title="SignUp Page" description="Sign Up Page here.">
+            {successMessage()}
+            {errorMessage()}
             {signUpForm()}
         </Base>
     )

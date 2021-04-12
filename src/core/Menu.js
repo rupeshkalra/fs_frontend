@@ -17,15 +17,19 @@ const Menu=({history})=>(
             <li className="nav-item">
                 <Link style={currentTab(history,"/")} className="nav-link" to="/">Home</Link>
             </li>
+            {isAuthenticated() && isAuthenticated().user.role===0 && (
             <li className="nav-item">
                 <Link style={currentTab(history,"/dashboard")} className="nav-link" to="/dashboard">DashBoard</Link>
             </li>
+            )}
             <li className="nav-item">
                 <Link style={currentTab(history,"/cart")} className="nav-link" to="/cart">Cart</Link>
             </li>
+            {isAuthenticated() && isAuthenticated().user.role==1 && (
             <li className="nav-item">
                 <Link style={currentTab(history,"/admin/dashboard")} className="nav-link" to="/admin/dashboard">Admin Dash</Link>
             </li>
+            )}
             {!isAuthenticated() && (
             <Fragment>
             <li className="nav-item">

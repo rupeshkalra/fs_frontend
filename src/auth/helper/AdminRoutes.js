@@ -1,6 +1,6 @@
 import React from 'react';
 import {isAuthenticated} from './index';
-import {Route , Redirect} from 'react-routr-dom';
+import {Route , Redirect} from 'react-router-dom';
 
 const  AdminRoute = ({ component : Component, ...rest })=> {
     
@@ -14,7 +14,7 @@ const  AdminRoute = ({ component : Component, ...rest })=> {
             <Redirect
               to={{
                 pathname: "/signin",
-                state: { from: location }
+                state: { from: props.location }
               }}
             />
           )

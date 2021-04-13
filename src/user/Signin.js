@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import { authenticate, isAuthenticated ,signin} from '../auth/helper';
 import Base from '../core/Base';
-import {Link,Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 
 const Signin=()=>{
 

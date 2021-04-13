@@ -1,11 +1,11 @@
 import {API} from '../../backend';
 
-const addCategory=(userId,token,category)=>{
-    return fetch(`${API}/create/category/${userId}`,{
-        method:POST,
+const createCategory=(userId,token,category)=>{
+    return fetch(`${API}/category/create/${userId}`,{
+        method:"POST",
         headers:{
             Accept:"application/json",
-            "Content-Type":"appplication/json",
+            "Content-Type":"application/json",
             Authorization:`Bearer ${token}`
         },
         body:JSON.stringify(category)
@@ -14,4 +14,4 @@ const addCategory=(userId,token,category)=>{
     .catch(err=>console.log(err))
 };
 
-export default addCategory;
+export default createCategory;

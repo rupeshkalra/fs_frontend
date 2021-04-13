@@ -11,7 +11,6 @@ import AddCategory from './admin/AddCategory';
 import ManageCategories from './admin/ManageCategories';
 import AddProduct from './admin/AddProduct';
 
-
 const Routes =()=>{
     return(
         <BrowserRouter>

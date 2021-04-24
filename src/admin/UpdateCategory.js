@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect,useState } from "react";
 import Base from "../core/Base";
 import { isAuthenticated } from "../auth/helper";
 import { Link } from "react-router-dom";
-import  {createCategory} from "./helper/adminapicall";
+import  {getCategory , updateCategory} from "./helper/adminapicall";
 
-const AddCategory = () => {
+const UpdateCategory = ({match}) => {
   const [name, setName] = useState("");
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -30,7 +30,7 @@ const AddCategory = () => {
     setSuccess(false);
 
     //backend request fired
-    createCategory(user._id, token, { name }).then(data => {
+    updateCategory(match.params.categoryId ,user._id, token,{name}).then(data => {
       if (data.error) {
         setError(true);
       } else {
@@ -41,15 +41,30 @@ const AddCategory = () => {
     });
   };
 
+  
+  const preload = categoryId => {
+    getCategory(categoryId).then(data => {
+      if (data.error) {
+        setError(true);
+      } else {
+        setName(data.name);
+      }
+    });
+  };
+
+  useEffect(() => {
+    preload(match.params.categoryId);
+  }, []);
+
   const successMessage = () => {
     if (success) {
-      return <h4 className="text-success">Category created successfully</h4>;
+      return <h4 className="text-success">Updated successfully</h4>;
     }
   };
 
   const warningMessage = () => {
     if (error) {
-      return <h4 className="text-danger">Failed to create category.</h4>;
+      return <h4 className="text-danger">Failed !!</h4>;
     }
   };
 
@@ -62,12 +77,11 @@ const AddCategory = () => {
           className="form-control my-3"
           onChange={handleChange}
           value={name}
-          autoFocus
           required
           placeholder="Enter a category"
         />
         <button onClick={onSubmit} className="btn btn-outline-info">
-          Create Category
+          Update Category
         </button>
       </div>
     </form>
@@ -75,8 +89,8 @@ const AddCategory = () => {
 
   return (
     <Base
-      title="Create a category here"
-      description="Add a new category."
+      title="Update category here"
+      description="Update category."
       className="container bg-info p-4"
     >
       <div className="row bg-white rounded">
@@ -91,4 +105,4 @@ const AddCategory = () => {
   );
 };
 
-export default AddCategory;
+export default UpdateCategory;

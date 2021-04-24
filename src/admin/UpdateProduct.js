@@ -42,7 +42,6 @@ const UpdateProduct = ({ match }) => {
 
   const preload = productId => {
     getProduct(productId).then(data => {
-      //console.log(data);
       if (data.error) {
         setValues({ ...values, error: data.error });
       } else {

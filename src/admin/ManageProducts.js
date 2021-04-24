@@ -12,7 +12,6 @@ const ManageProducts = () => {
 
   const preload = () => {
     getProducts().then(data => {
-      console.log(data);
       if (data.error) {
       console.log(data.error);
       } else {
